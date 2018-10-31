@@ -92,7 +92,6 @@ class PolicyLearner:
 
             while True:
                 next_sample = self._build_sample()
-                print(next_sample)
 
                 if next_sample is None:
                     break

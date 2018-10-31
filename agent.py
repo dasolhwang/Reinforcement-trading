@@ -59,6 +59,7 @@ class Agent:
 
     def decide_action(self, policy_network, sample, epsilon):
         confidence = 0.
+
         if np.random.rand() < epsilon:
             exploration = True
             action = np.random.randint(self.NUM_ACTIONS)

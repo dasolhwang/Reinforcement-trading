@@ -5,7 +5,7 @@ import data_manager
 from policy_learner import PolicyLearner
 
 if __name__ == '__main__':
-    coin_code = 'bitcoin_min'
+    coin_code = '2017-10-01-min'
 
     log_dir = os.path.join(settings.BASE_DIR, 'logs/%s' % coin_code)
     timestr = settings.get_time_str()
@@ -24,7 +24,7 @@ if __name__ == '__main__':
     prep_data = data_manager.preprocess(coin_chart)
     training_data = data_manager.build_training_data(prep_data)
 
-    training_data = training_data[(training_data['date'] >= '2017-01-01 00:00:00')&(training_data['date'] <= '2018-01-01 00:00:00')] # 추세를 사람이 판단해서 (상승, 하락, 보합)
+    training_data = training_data[(training_data['date'] >= '2018-04-01 00:00:00')&(training_data['date'] < '2018-10-01 00:00:00')] # 추세를 사람이 판단해서 (상승, 하락, 보합)
     training_data = training_data.dropna()
 
     features_chart_data = ['date', 'open', 'high', 'low', 'close', 'volume']
@@ -45,7 +45,7 @@ if __name__ == '__main__':
         coin_code=coin_code, coin_chart=coin_chart, training_data=training_data,
         min_trading_unit=0.01, max_trading_unit=3, delayed_reward_threshold=.1, lr=.001)
 
-    policy_learner.fit(balance=10000000, num_epoches=5,
+    policy_learner.fit(balance=10000000, num_epoches=100,
                        discount_factor=0, start_epsilon=.5)
 
     model_dir = os.path.join(settings.BASE_DIR, 'models/%s' % coin_code)
