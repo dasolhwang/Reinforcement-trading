@@ -21,10 +21,10 @@ if __name__ == '__main__':
 
     coin_chart = data_manager.load_chart_data(
         os.path.join(settings.BASE_DIR,'data/chart_data/{}.csv'.format(coin_code)))
-    prep_data = data_manager.preprocess(coin_chart)
+    prep_data = data_manager.preprocess_min(coin_chart)
     training_data = data_manager.build_training_data(prep_data)
 
-    training_data = training_data[(training_data['date'] >= '2018-04-01 00:00:00')&(training_data['date'] < '2018-10-01 00:00:00')] # 추세를 사람이 판단해서 (상승, 하락, 보합)
+    training_data = training_data[(training_data['date'] > '2018-10-13 00:00:00')] # 추세를 사람이 판단해서 (상승, 하락, 보합)
     training_data = training_data.dropna()
 
     features_chart_data = ['date', 'open', 'high', 'low', 'close', 'volume']

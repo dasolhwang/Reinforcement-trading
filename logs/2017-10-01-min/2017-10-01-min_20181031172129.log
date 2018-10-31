@@ -1,7 +1,0 @@
-Learning Rate: 0.001, Discount Factor: 0, Trading Unit: [0.01, 3], Delayed Reward threshold: 0.1
-[Epoch 1/5]	Epsilon:0.5000	#Expl.:728/1441	#Buy:682	#Sell:536	#Hold:223	#Coins:0	PV:₩9,981,750	POS:9	NEG:15	Loss:  0.189531
-[Epoch 2/5]	Epsilon:1.0000	#Expl.:1441/1441	#Buy:709	#Sell:701	#Hold:31	#Coins:0	PV:₩9,996,930	POS:10	NEG:14	Loss:  0.184275
-[Epoch 3/5]	Epsilon:1.0000	#Expl.:1441/1441	#Buy:714	#Sell:700	#Hold:27	#Coins:0	PV:₩9,998,225	POS:11	NEG:13	Loss:  0.187917
-[Epoch 4/5]	Epsilon:1.0000	#Expl.:1441/1441	#Buy:718	#Sell:683	#Hold:40	#Coins:0	PV:₩9,996,085	POS:9	NEG:15	Loss:  0.186515
-[Epoch 5/5]	Epsilon:1.0000	#Expl.:1441/1441	#Buy:749	#Sell:687	#Hold:5	#Coins:0	PV:₩9,985,910	POS:11	NEG:13	Loss:  0.188569
-Max PV: ₩9,998,225, 	 # Win: 0
