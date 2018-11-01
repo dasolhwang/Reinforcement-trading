@@ -11,7 +11,6 @@ class PolicyNetwork:
         self.lr = lr
         self.loaded_model = None
 
-        # LSTM 신경망
         self.model = Sequential()
         self.model.add(LSTM(256, input_shape=(1, input_dim),return_sequences=True, stateful=False, dropout=0.5))
         self.model.add(BatchNormalization())
@@ -32,13 +31,13 @@ class PolicyNetwork:
         self.prob = self.model.predict(np.array(sample).reshape((1, -1, self.input_dim)))[0]
         return self.prob
 
-    def train_on_batch(self, x, y): # 배치 1개로 한번 학습
+    def train_on_batch(self, x, y):
         return self.model.train_on_batch(x, y)
 
     def evaluate(self,x,y,batch_size):
         return model.evaluate(x, y, batch_size=batch_size)
 
-    def save_model(self, model_path): # 모델 저장
+    def save_model(self, model_path):
         model_json = self.model.to_json()
         with open("model.json", "w") as json_file:
             json_file.write(model_json)
@@ -46,7 +45,7 @@ class PolicyNetwork:
         if model_path is not None and self.model is not None:
             self.model.save_weights(model_path, overwrite=True)
 
-    def load_model(self, model_path): # 모델 가져오기
+    def load_model(self, model_path):
         json_file = open('model.json', 'r')
         loaded_model_json = json_file.read()
         json_file.close()
