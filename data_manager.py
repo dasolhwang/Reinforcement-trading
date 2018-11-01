@@ -33,9 +33,11 @@ def preprocess_min(chart_data):
     prep_data = chart_data
     windows = [5, 10, 20, 60, 120]
     for window in windows:
-        prep_data['close_ma{}'.format(window)] = prep_data['close'].rolling(window*24*60).mean()
+        prep_data['close_ma{}'.format(window)] = (prep_data['close'].rolling(window*24*60, min_periods=1).sum())/len(prep_data[prep_data['close']!='nan'])
         prep_data['volume_ma{}'.format(window)] = (
-            prep_data['volume'].rolling(window*24*60).mean())
+            prep_data['volume'].rolling(window*24*60, min_periods=1).sum())/(len(prep_data[prep_data['close']!='nan']))
+        prep_data['close_ma{}'.format(window)].iloc[:window] = None
+        prep_data['volume_ma{}'.format(window)].iloc[:window] = None
     return prep_data
 
 def build_training_data(prep_data):
