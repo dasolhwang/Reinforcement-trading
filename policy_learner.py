@@ -6,7 +6,7 @@ import settings
 from environment import Environment
 from agent import Agent
 from policy_network import PolicyNetwork
-from visualizer import Visualizer
+#from visualizer import Visualizer
 
 logger = logging.getLogger(__name__)
 locale.setlocale(locale.LC_ALL, 'ko_KR.UTF-8')
@@ -33,7 +33,7 @@ class PolicyLearner:
         self.num_features = self.training_data.shape[1] + self.agent.STATE_DIM # -1 # input_dim = 15 + 2 = 17
         self.policy_network = PolicyNetwork(input_dim=self.num_features, output_dim=self.agent.NUM_ACTIONS, lr=lr)
 
-        self.visualizer = Visualizer()
+#        self.visualizer = Visualizer()
 
     def reset(self):
         self.sample = None
@@ -52,7 +52,7 @@ class PolicyLearner:
             delayed_reward_threshold=self.agent.delayed_reward_threshold))
 
 
-        self.visualizer.prepare(self.environment.coin_chart)
+#        self.visualizer.prepare(self.environment.coin_chart)
         epoch_summary_dir = os.path.join(
             settings.BASE_DIR, 'epoch_summary/%s/epoch_summary_%s' % (
                 self.coin_code, settings.timestr))
@@ -80,7 +80,7 @@ class PolicyLearner:
             self.agent.reset()
             self.policy_network.reset()
             self.reset()
-            self.visualizer.clear([0, len(self.coin_chart)])
+ #           self.visualizer.clear([0, len(self.coin_chart)])
 
             if learning:
                 epsilon = start_epsilon * (1. - float(epoch) / (num_epoches - 1))
@@ -121,6 +121,7 @@ class PolicyLearner:
                     self.agent.base_portfolio_value = self.agent.portfolio_value
 
                 if learning and delayed_reward != 0:
+                    print("one batch")
                     batch_size = min(batch_size, max_memory)
                     x, y = self._get_batch(memory, batch_size, discount_factor, delayed_reward)
                     if len(x) > 0:
@@ -135,16 +136,16 @@ class PolicyLearner:
             num_epoches_digit = len(str(num_epoches))
             epoch_str = str(epoch + 1).rjust(num_epoches_digit, '0')
 
-            self.visualizer.plot(
-                epoch_str=epoch_str, num_epoches=num_epoches, epsilon=epsilon,
-                action_list=Agent.ACTIONS, actions=memory_action,
-                num_coins=memory_num_coins, outvals=memory_prob,
-                exps=memory_exp_idx, learning=memory_learning_idx,
-                initial_balance=self.agent.initial_balance, pvs=memory_pv
-            )
-            self.visualizer.save(os.path.join(
-                epoch_summary_dir, 'epoch_summary_%s_%s.png' % (
-                    settings.timestr, epoch_str)))
+#            self.visualizer.plot(
+#                epoch_str=epoch_str, num_epoches=num_epoches, epsilon=epsilon,
+#                action_list=Agent.ACTIONS, actions=memory_action,
+#                num_coins=memory_num_coins, outvals=memory_prob,
+#                exps=memory_exp_idx, learning=memory_learning_idx,
+#                initial_balance=self.agent.initial_balance, pvs=memory_pv
+#            )
+#            self.visualizer.save(os.path.join(
+#                epoch_summary_dir, 'epoch_summary_%s_%s.png' % (
+#                    settings.timestr, epoch_str)))
 
             if pos_learning_cnt + neg_learning_cnt > 0:
                 loss /= pos_learning_cnt + neg_learning_cnt

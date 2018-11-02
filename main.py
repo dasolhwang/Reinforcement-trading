@@ -1,12 +1,13 @@
 import logging
 import os
 import settings
+import pandas as pd
 import data_manager
 from policy_learner import PolicyLearner
 
 if __name__ == '__main__':
+#    coin_code = 'bitcoin-2018-01-12-2018-07-15'
     coin_code = '2017-10-01-min'
-
     log_dir = os.path.join(settings.BASE_DIR, 'logs/%s' % coin_code)
     timestr = settings.get_time_str()
     if not os.path.exists('logs/%s' % coin_code):
@@ -21,10 +22,13 @@ if __name__ == '__main__':
 
     coin_chart = data_manager.load_chart_data(
         os.path.join(settings.BASE_DIR,'data/chart_data/{}.csv'.format(coin_code)))
+    print("coin chart get")
+#    print(len(coin_chart))
     prep_data = data_manager.preprocess_min(coin_chart)
+#    print(len(prep_data))
     training_data = data_manager.build_training_data(prep_data)
-
-    training_data = training_data[(training_data['date'] > '2018-10-13 00:00:00')] # 추세를 사람이 판단해서 (상승, 하락, 보합)
+#    print(len(training_data))
+    training_data = training_data[(training_data['date'] >= '2018-05-24 00:00:00')&(training_data['date'] <= '2018-07-10 00:00:00')]
     training_data = training_data.dropna()
 
     features_chart_data = ['date', 'open', 'high', 'low', 'close', 'volume']
@@ -41,11 +45,16 @@ if __name__ == '__main__':
     ]
     training_data = training_data[features_training_data]
 
+    print("train data get")
+    print("coin_len", len(coin_chart))
+    print("train_len", len(training_data))
+
     policy_learner = PolicyLearner(
         coin_code=coin_code, coin_chart=coin_chart, training_data=training_data,
-        min_trading_unit=0.01, max_trading_unit=3, delayed_reward_threshold=.1, lr=.001)
+        min_trading_unit=0.001, max_trading_unit=0.01, delayed_reward_threshold=.1, lr=.001)
+    print("policy learner start")
 
-    policy_learner.fit(balance=10000000, num_epoches=100,
+    policy_learner.fit(balance=1000000, num_epoches=100,
                        discount_factor=0, start_epsilon=.5)
 
     model_dir = os.path.join(settings.BASE_DIR, 'models/%s' % coin_code)

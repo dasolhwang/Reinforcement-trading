@@ -1,3 +1,5 @@
+import numpy as np
+
 class Environment:
 
     PRICE_IDX = 4
@@ -19,7 +21,9 @@ class Environment:
         return None
 
     def get_price(self):
-        if self.observation is not None:
+        if np.isnan(self.observation.close):
+            return None
+        if (self.observation is not None):
             return self.observation[self.PRICE_IDX]
         return None
 

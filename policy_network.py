@@ -28,7 +28,9 @@ class PolicyNetwork:
         self.prob = None
 
     def predict(self, sample): # input_dim = 17 (15+2)
+#        print(np.array(sample))
         self.prob = self.model.predict(np.array(sample).reshape((1, -1, self.input_dim)))[0]
+#        print(self.prob)
         return self.prob
 
     def train_on_batch(self, x, y):
