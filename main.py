@@ -27,8 +27,13 @@ if __name__ == '__main__':
     prep_data = data_manager.preprocess_min(coin_chart)
 #    print(len(prep_data))
     training_data = data_manager.build_training_data(prep_data)
+<<<<<<< HEAD
 #    print(len(training_data))
     training_data = training_data[(training_data['date'] >= '2018-05-24 00:00:00')&(training_data['date'] <= '2018-07-10 00:00:00')]
+=======
+
+    training_data = training_data[(training_data['date'] > '2018-10-13 00:00:00')]
+>>>>>>> 10b363ce06767c8441b9160102f77d7e0ccf3c5f
     training_data = training_data.dropna()
 
     features_chart_data = ['date', 'open', 'high', 'low', 'close', 'volume']

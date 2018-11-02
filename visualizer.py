@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 10b363ce06767c8441b9160102f77d7e0ccf3c5f
 import matplotlib
 matplotlib.use('Agg')
 
